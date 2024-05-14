@@ -1,5 +1,5 @@
 const gameInfo = document.querySelector('.gameInfo');
-const boxes = document.querySelectorAll('.box');
+const boxes = document.querySelectorAll(".box");
 const newGameBtn = document.querySelector('.btn');
 
 let currentPlayer;
@@ -20,16 +20,14 @@ const winningPositions = [
 function initialize() {
 
     currentPlayer = 'X';
-    gameInfo.textContent = `Current Player: ${currentPlayer}`;
-
+    gameInfo.innerText = `Current Player: ${currentPlayer}`;
 
     // Make Boxes Empty
     boxes.forEach((b) => {
-        b.textContent = "";
+        b.innerText = "";
         b.style.pointerEvents = "all";
         b.classList.remove("win");
     });
-
 
     newGameBtn.classList.remove("active");
 }
@@ -37,13 +35,13 @@ function initialize() {
 initialize();
 
 
-// Handle Click Game 
 function handleClick(index) {
     if (boxes[index].textContent === "") {
         boxes[index].style.pointerEvents = "none";
         boxes[index].textContent = currentPlayer;
-        // gameGrid[index] = currentPlayer;
-        swapTurns();
+        
+        currentPlayer = currentPlayer === "X" ? "O" : "X";
+
         gameInfo.textContent = `Current Player : ${currentPlayer}`;
         checkGameOver();
     }
@@ -54,7 +52,7 @@ function checkGameOver() {
     let winner = "";
     winningPositions.forEach((position) => {
         if ((boxes[position[0]].textContent !== "" || boxes[position[1]].textContent !== "" || boxes[position[2]].textContent !== "") && (boxes[position[0]].textContent === boxes[position[1]].textContent) && (boxes[position[1]].textContent === boxes[position[2]].textContent)) {
-            //Came here since winnner if found
+            //Came here since winnner is found
             //so make all other as unclickable
             boxes.forEach((box) => {
                 box.style.pointerEvents = "none";
@@ -74,7 +72,6 @@ function checkGameOver() {
         return;
     }
 
-
     //Check for tie
     let fillCount = 0;
     boxes.forEach((box) => {
@@ -87,11 +84,6 @@ function checkGameOver() {
         gameInfo.textContent = "Game Tied !";
         newGameBtn.classList.add("active");
     }
-}
-
-
-function swapTurns() {
-    currentPlayer = currentPlayer === "X" ? "O" : "X";
 }
 
 
